@@ -13,9 +13,9 @@ jobs:
           XCURL: ${{ vars.XCURL }}
           WXPUSHAPPTOKEN: ${{ secrets.WXPUSHAPPTOKEN }}
         run: |
-          content=$(curl -s $XCURL)
+          content=$(curl -s $XCURL | grep "用餐时间")
           if [[ $content =~ (.*)用餐时间 ]]; then
-            curl -X POST -H "Content-Type: application/json" -d "{\"appToken\": \"$WXPUSHAPPTOKEN\",\"content\": \$content\",\"summary\": \"西餐开了！\",\"contentType\": 2,\"topicIds\": [3176],\"url\": \"$XCURL\",\"verifyPay\": false}"   https://wxpusher.zjiecode.com/api/send/message
+            curl -X POST -H "Content-Type: application/json" -d "{\"appToken\": \"$WXPUSHAPPTOKEN\",\"content\": \"西餐开了\",\"summary\": \"西餐开了！\",\"contentType\": 2,\"topicIds\": [3176],\"url\": \"$XCURL\",\"verifyPay\": false}"   https://wxpusher.zjiecode.com/api/send/message
           else
             echo "No match"
           fi
