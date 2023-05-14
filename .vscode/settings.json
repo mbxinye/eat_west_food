@@ -1,5 +1,3 @@
 {
-    "github-actions.workflows.pinned.workflows": [
-        ".github/workflows/auto-check-west-food-open.yml"
-    ]
+    "github-actions.workflows.pinned.workflows": []
 }
