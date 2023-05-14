@@ -10,11 +10,11 @@ jobs:
     steps:
       - name: Check Webpage Content
         run: |
-          content=$(curl -s https://www.wjx.cn/vm/P2FMrT5.aspx | grep "用餐时间")
+          content=$(curl -s $XCURL | grep "用餐时间")
           if [[ $content =~ (.*)用餐时间 ]]; then
             text=${BASH_REMATCH[1]}
             echo $text
-            curl -X POST -H "Content-Type: application/json" -d "{\"appToken\": \"AT_KLEwOV05SVHgCQDRHfG4FO7ECFoImhld\"}" -d "{\"content\": \"西餐开了\"}" -d "{\"summary\": \"西餐开了！\"}" -d "{\"contentType\": 1}" -d "{\"topicIds\": [3176]}" -d "{\"url\": \"https://www.wjx.cn/vm/P2FMrT5.aspx\"}" -d "{\"verifyPay\": false}"   https://wxpusher.zjiecode.com/api/send/message
+            curl -X POST -H "Content-Type: application/json" -d "{\"appToken\": \"$WXPUSHAPPTOKEN\",\"content\": \"西餐开了\",\"summary\": \"西餐开了！\",\"contentType\": 1,\"topicIds\": [3176],\"url\": \"$XCURL\",\"verifyPay\": false}"   https://wxpusher.zjiecode.com/api/send/message
           else
             echo "No match"
           fi
