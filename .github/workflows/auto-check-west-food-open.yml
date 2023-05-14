@@ -15,8 +15,6 @@ jobs:
         run: |
           content=$(curl -s $XCURL)
           if [[ $content =~ (.*)用餐时间 ]]; then
-            text=${BASH_REMATCH[1]}
-            echo $text
             curl -X POST -H "Content-Type: application/json" -d "{\"appToken\": \"$WXPUSHAPPTOKEN\",\"content\": \$content\",\"summary\": \"西餐开了！\",\"contentType\": 2,\"topicIds\": [3176],\"url\": \"$XCURL\",\"verifyPay\": false}"   https://wxpusher.zjiecode.com/api/send/message
           else
             echo "No match"
