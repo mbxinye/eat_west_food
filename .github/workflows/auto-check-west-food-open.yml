@@ -1,23 +1,21 @@
-name: Check Webpage
-
+name: Check West Food Open
+run-name: ${{ github.actor }} is checking out west-food open 🚀
 on:
   schedule:
     - cron: "*/5 * * * *"
 
 jobs:
-  check_webpage:
+  Check-West-Food-Open:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: "14.x"
-      - name: Install Dependencies
-        run: npm install
       - name: Check Webpage Content
-        run: node check-webpage.js
         env:
-          WEBPAGE_URL: "https://www.wjx.cn/vm/P2FMrT5.aspx"
-          SEARCH_TERM: "用餐时间"
+          XCURL: ${{ vars.XCURL }}
+          WXPUSHAPPTOKEN: ${{ secrets.WXPUSHAPPTOKEN }}
+        run: |
+          content=$(curl -s $XCURL)
+          if [[ $content =~ (.*)用餐时间 ]]; then
+            curl -X POST -H "Content-Type: application/json" -d "{\"appToken\": \"$WXPUSHAPPTOKEN\",\"content\": \"西餐开了\",\"summary\": \"西餐开了！\",\"contentType\": 2,\"topicIds\": [3176],\"url\": \"$XCURL\",\"verifyPay\": false}"   https://wxpusher.zjiecode.com/api/send/message
+          else
+            echo "No match"
+          fi
