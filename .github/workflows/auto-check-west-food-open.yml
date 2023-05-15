@@ -14,6 +14,7 @@ jobs:
           WXPUSHAPPTOKEN: ${{ secrets.WXPUSHAPPTOKEN }}
         run: |
           content=$(curl -s $XCURL)
+          echo $content
           if [[ $content =~ (.*)用餐时间 ]]; then
             curl -X POST -H "Content-Type: application/json" -d "{\"appToken\": \"$WXPUSHAPPTOKEN\",\"content\": \"西餐开了\",\"summary\": \"西餐开了！\",\"contentType\": 2,\"topicIds\": [3176],\"url\": \"$XCURL\",\"verifyPay\": false}"   https://wxpusher.zjiecode.com/api/send/message
           else
