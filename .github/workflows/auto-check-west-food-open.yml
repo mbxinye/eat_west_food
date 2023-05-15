@@ -10,10 +10,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Install dependencies
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14.x"
+      - name: Install Dependencies
         run: npm install
-      - name: Check webpage
-        env:
-          WEBPAGE_URL: https://www.wjx.cn/vm/P2FMrT5.aspx
-          SEARCH_TERM: 用餐时间
+      - name: Check Webpage Content
         run: node check-webpage.js
+        env:
+          WEBPAGE_URL: "https://www.wjx.cn/vm/P2FMrT5.aspx"
+          SEARCH_TERM: "用餐时间"
